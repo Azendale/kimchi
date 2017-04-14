@@ -156,24 +156,26 @@
                 </div>
                 <div class="ceph-section hidden row">
                     <div class="form-group">
-                        <label for="iscsiserverId">$_("Ceph Monitors")</label>
-                        <div class="col-md-12">
-                            <div class="col-md-10">
-                                <span class="filter-select popable" id="iSCSIServer">
-                                    <input id="iscsiserverId" type="text" class="form-control" placeholder="$_("Monitor IP or hostname")">
-                                </span>
-                            </div>
-                            <div class="col-md-2">
-                                <label for="cephportId" class="sr-only">$_("Port")</label>
-                                <input id="cephportId" placeholder="$_("Port")" type="text" class="form-control" maxlength="5">
+                        <label for="cephmonitor01Id">$_("Ceph Monitors")</label>
+                        <!-- To hold future list of monitors -->
+                        <div class="">
+                            <div class="col-md-12">
+                                <div class="col-md-9">
+                                    <input id="cephmonitor01Id" type="text" class="form-control" placeholder="$_("Monitor IP or hostname")">
+                                </div>
+                                <div class="col-md-2">
+                                    <label for="cephport01Id" class="sr-only">$_("Port")</label>
+                                    <input id="cephport01Id" placeholder="$_("Port")" type="text" class="form-control" maxlength="5">
+                                </div>
                             </div>
                         </div>
                         <p class="help-block">
-                            <i class="fa fa-info-circle"></i> $_("Ceph monitor IP or hostname. Port is optional. For redundancy, it is recommended to include every monitor in the Ceph cluster.")
+                            <i class="fa fa-info-circle"></i> $_("Ceph monitor IP or hostname. Port is optional. For redundancy, it is recommended to set multiple monitors.")
                         </p>
                     </div>
                     <div class="form-group">
-                        <input id="cephPoolId" type="text" class="form-control">
+                        <label for="cephpoolId">$_("Ceph Pool")</label>
+                        <input id="cephpoolId" type="text" class="form-control">
                         <p class="help-block">
                             <i class="fa fa-info-circle"></i> $_("The name of the Ceph storage pool to use.")
                         </p>
@@ -182,7 +184,7 @@
                         <input type="checkbox" checked="checked" class="wok-checkbox" id="cephauthId" name="cephauthname">
                         <label for="cephauthId">$_("Cephx Authentication")</label>
                     </div>
-                    <div class="authenticationfield form-section">
+                    <div class="cephauthenticationfield form-section">
                         <div class="form-group">
                             <div class="col-md-6">
                                 <input id="cephusernameId" placeholder="$_("Ceph User Name")" type="text" class="form-control">

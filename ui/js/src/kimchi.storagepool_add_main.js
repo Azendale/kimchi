@@ -278,7 +278,7 @@ kimchi.initStorageAddPage = function() {
 
         var poolObject = {'dir': ".path-section", 'netfs': '.nfs-section',
                           'iscsi': '.iscsi-section', 'scsi': '.scsi-section',
-                          'logical': '.logical-section'};
+                          'logical': '.logical-section', 'ceph': '.ceph-section'};
         var selectType = $(this).val();
         $.each(poolObject, function(type, value) {
             if(selectType === type){
@@ -299,6 +299,21 @@ kimchi.initStorageAddPage = function() {
         $(this).toggleClass("invalid-field",!/^[0-9]*$/.test($(this).val()));
     });
     $('#iscsiserverId').keyup(function(event) {
+        $(this).toggleClass("invalid-field",!wok.isServer($(this).val().trim()));
+    }).change(function(event) {
+        $(this).toggleClass("invalid-field",!wok.isServer($(this).val().trim()));
+    });
+    $('#cephauthId').click(function() {
+        if ($(this).prop("checked")) {
+            $('.cephauthenticationfield').removeClass('hidden');
+        } else {
+            $('.cephauthenticationfield').addClass('hidden');
+        }
+    });
+    $('#cephport01Id').keyup(function(event) {
+        $(this).toggleClass("invalid-field",!/^[0-9]*$/.test($(this).val()));
+    });
+    $('#cephmonitor01Id').keyup(function(event) {
         $(this).toggleClass("invalid-field",!wok.isServer($(this).val().trim()));
     }).change(function(event) {
         $(this).toggleClass("invalid-field",!wok.isServer($(this).val().trim()));

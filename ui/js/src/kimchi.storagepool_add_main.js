@@ -204,6 +204,9 @@ kimchi.initStorageAddPage = function() {
     }, {
         label : i18n.KCHPOOL6004M,
         value : "scsi"
+    }, {
+        label : i18n.KCHPOOL6029M,
+        value : "ceph"
     } ];
     var $select = $('#poolTypeInputId');
     var optionHtml = '';

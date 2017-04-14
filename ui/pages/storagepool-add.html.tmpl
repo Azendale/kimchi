@@ -183,6 +183,9 @@
                     <div class="form-group">
                         <input type="checkbox" checked="checked" class="wok-checkbox" id="cephauthId" name="cephauthname">
                         <label for="cephauthId">$_("Cephx Authentication")</label>
+                        <p class="help-block">
+                            <i class="fa fa-info-circle"></i> $_("Cephx authentication is enabled by default in the current Ceph releases.")
+                        </p>
                     </div>
                     <div class="cephauthenticationfield form-section">
                         <div class="form-group">
@@ -193,9 +196,6 @@
                                 <input id="cephkeyId" placeholder="$_("Ceph base64 key")" type="text" class="form-control">
                             </div>
                         </div>
-                        <p class="help-block">
-                            <i class="fa fa-info-circle"></i> $_("Cephx authentication is enabled by default in the current Ceph releases.")
-                        </p>
                 </div>
             </form>
         </div>

@@ -169,20 +169,20 @@
                                         <input id="cephport01Id" placeholder="$_("Port")" type="text" class="form-control" maxlength="5">
                                     </div>
                                     <div class="col-md-1">
-                                        <a class="ceph-monitor-delete disabled" href="#" data-monitor-number="01">
+                                        <button class="btn btn-primary ceph-monitor-delete disabled" data-monitor-number="01" type="button">
                                             <i class="fa fa-ban">
                                                 <!-- Remove monitor-->
                                             </i>
-                                        </a>
+                                        </button>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <a id="ceph-monitor-add" class="btn-tool" href="javascript:void(0);">
+                        <button id="ceph-monitor-add" class="btn btn-primary" type="button">
                             <i class="fa fa-plus-circle">
-                                <span>Add Monitor</span>
                             </i>
-                        </a>
+                            Add Monitor
+                        </button>
                         <p class="help-block">
                             <i class="fa fa-info-circle"></i> $_("Ceph monitor IP or hostname. Port is optional. For redundancy, it is recommended to set multiple monitors.")
                         </p>

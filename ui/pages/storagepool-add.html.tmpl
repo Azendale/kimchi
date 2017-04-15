@@ -157,18 +157,32 @@
                 <div class="ceph-section hidden row">
                     <div class="form-group">
                         <label for="cephmonitor01Id">$_("Ceph Monitors")</label>
-                        <!-- To hold future list of monitors -->
-                        <div class="">
-                            <div class="col-md-12">
-                                <div class="col-md-9">
-                                    <input id="cephmonitor01Id" type="text" class="form-control" placeholder="$_("Monitor IP or hostname")">
-                                </div>
-                                <div class="col-md-2">
-                                    <label for="cephport01Id" class="sr-only">$_("Port")</label>
-                                    <input id="cephport01Id" placeholder="$_("Port")" type="text" class="form-control" maxlength="5">
+                        <input type="hidden" name="ceph-monitor-numbers-list-name" id="ceph-monitor-numbers-list-id" value="01">
+                        <div class="ceph-monitors-list">
+                            <div id="cephmonitor01div">
+                                <div class="col-md-12">
+                                    <div class="col-md-9">
+                                        <input id="cephmonitor01Id" type="text" class="form-control" placeholder="$_("Monitor IP or hostname")">
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label for="cephport01Id" class="sr-only">$_("Port")</label>
+                                        <input id="cephport01Id" placeholder="$_("Port")" type="text" class="form-control" maxlength="5">
+                                    </div>
+                                    <div class="col-md-1">
+                                        <a class="ceph-monitor-delete disabled" href="#" data-monitor-number="01">
+                                            <i class="fa fa-ban">
+                                                <!-- Remove monitor-->
+                                            </i>
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
+                        <a id="ceph-monitor-add" class="btn-tool" href="javascript:void(0);">
+                            <i class="fa fa-plus-circle">
+                                <span>Add Monitor</span>
+                            </i>
+                        </a>
                         <p class="help-block">
                             <i class="fa fa-info-circle"></i> $_("Ceph monitor IP or hostname. Port is optional. For redundancy, it is recommended to set multiple monitors.")
                         </p>

@@ -125,17 +125,29 @@ kimchi.setupISCSI = function(){
 
 kimchi.generateCephStorageMonitorForm = function(rowid) {
     var monitorrow = $("<div/>", {'id': 'cephmonitor' + rowid + 'div'});
-    var hostnamediv = $("<div/>", {'class': 'col-md-12'});
-    hostnamediv.append($("input", {'id': 'cephmonitor' + rowid + 'Id', 'type': 'text', 'class': 'form-control', 'placeholder':$_("Monitor IP or hostname")}));
+    var hostnamediv = $("<div/>", {'class': 'col-md-9'});
+    hostnamediv.append($("<input/>", {'id': 'cephmonitor' + rowid + 'Id', 'type': 'text', 'class': 'form-control', 'placeholder': "Monitor IP or hostname"}));
     var portdiv = $("<div/>", {'class': 'col-md-2'});
     var portlabel = $('<label/>', {'for': 'cephport' + rowid + 'Id', 'class': 'sr-only'});
-    portlabel.append($_("Port"));
+    portlabel.append("Port");
     portdiv.append(portlabel);
-    portdiv.append($("<input/>", {'id': 'cephport' + rowid + 'Id', 'placeholder': $_("Port"), 'type': 'text', 'class': 'form-control', 'maxlength': '5'}));
+    portdiv.append($("<input/>", {'id': 'cephport' + rowid + 'Id', 'placeholder': "Port", 'type': 'text', 'class': 'form-control', 'maxlength': '5'}));
     var removediv = $('<div/>', {'class': 'col-md-1'});
     var removebutton = $('<button/>', {'class': 'btn btn-primar ceph-monitor-delete', 'data-monitor-number': rowid, 'type': 'button'});
     removebutton.append($('<i/>', {'class': 'fa fa-ban'}));
     removediv.append(removebutton);
+    removebutton.click(function(monitorrowSealed, rowidSealed) {
+        return function() {
+            var idslist = $('#ceph-monitor-numbers-list-id').val().split(',');
+            var index = idslist.indexOf(rowidSealed);
+            while (-1 < index) {
+                idslist.splice(index, 1);
+                index = idslist.indexOf(rowidSealed);
+            }
+            $("#ceph-monitor-numbers-list-id").get(0).value = idslist.join(',');
+            $("#ceph-monitors-list").get(0).removeChild(monitorrowSealed.get(0));
+        };
+    }(monitorrow, rowid));
     monitorrow.append(hostnamediv);
     monitorrow.append(portdiv);
     monitorrow.append(removediv);

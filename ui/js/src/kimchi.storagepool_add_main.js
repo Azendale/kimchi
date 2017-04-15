@@ -123,6 +123,25 @@ kimchi.setupISCSI = function(){
     initISCSIServers();
 };
 
+kimchi.generateCephStorageMonitorForm = function(rowid) {
+    var monitorrow = $("<div/>", {'id': 'cephmonitor' + rowid + 'div'});
+    var hostnamediv = $("<div/>", {'class': 'col-md-12'});
+    hostnamediv.append($("input", {'id': 'cephmonitor' + rowid + 'Id', 'type': 'text', 'class': 'form-control', 'placeholder':$_("Monitor IP or hostname")}));
+    var portdiv = $("<div/>", {'class': 'col-md-2'});
+    var portlabel = $('<label/>', {'for': 'cephport' + rowid + 'Id', 'class': 'sr-only'});
+    portlabel.append($_("Port"));
+    portdiv.append(portlabel);
+    portdiv.append($("<input/>", {'id': 'cephport' + rowid + 'Id', 'placeholder': $_("Port"), 'type': 'text', 'class': 'form-control', 'maxlength': '5'}));
+    var removediv = $('<div/>', {'class': 'col-md-1'});
+    var removebutton = $('<button/>', {'class': 'btn btn-primar ceph-monitor-delete', 'data-monitor-number': rowid, 'type': 'button'});
+    removebutton.append($('<i/>', {'class': 'fa fa-ban'}));
+    removediv.append(removebutton);
+    monitorrow.append(hostnamediv);
+    monitorrow.append(portdiv);
+    monitorrow.append(removediv);
+    return monitorrow;
+};
+
 kimchi.initStorageAddPage = function() {
     kimchi.listHostPartitions(function(data) {
         if (data.length > 0) {
@@ -317,6 +336,26 @@ kimchi.initStorageAddPage = function() {
         $(this).toggleClass("invalid-field",!wok.isServer($(this).val().trim()));
     }).change(function(event) {
         $(this).toggleClass("invalid-field",!wok.isServer($(this).val().trim()));
+    });
+    $('#ceph-monitor-add').click(function () {
+        var formRows = $('#ceph-monitor-numbers-list-id').val().split(',');
+        var max = 1;
+        for (var i=0; i < formRows.length; i++) {
+            var rowNum = parseInt(formRows[i], 10);
+            if (rowNum > max) {
+                max = rowNum;
+            }
+        }
+        var newRowNum = max + 1;
+        if (newRowNum < 10) {
+            newRowNum = "0" + newRowNum.toString();
+        } else {
+            newRowNum = newRowNum.toString();
+        }
+        formRows.push(newRowNum);
+        $('#ceph-monitor-numbers-list-id').get(0).value = formRows.join(",");
+        // Add new row HTML here
+        $('#ceph-monitors-list').append(kimchi.generateCephStorageMonitorForm(newRowNum));
     });
 
     $('[name="logicalRadioSelection"]').change(function(){

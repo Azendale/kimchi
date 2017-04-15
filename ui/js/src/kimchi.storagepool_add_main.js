@@ -450,6 +450,8 @@ kimchi.validateForm = function() {
         return kimchi.validateIscsiForm();
     } else if (poolType === "logical") {
         return kimchi.validateLogicalForm();
+    } else if (poolType === "ceph") {
+        return kimchi.validateCephForm();
     } else {
         return true;
     }
@@ -502,6 +504,31 @@ kimchi.validateLogicalForm = function () {
     } else {
         return true;
     }
+};
+
+kimchi.validateCephForm = function () {
+    var monitorslist = $("#ceph-monitor-numbers-list-id").val().split(",");
+    for (var i = 0; i < monitorslist.length; i++) {
+        if (!kimchi.validateServer($("#cephmonitor"+monitorslist[i]+"Id").val())) {
+            return false;
+        }
+        var port = $("#cephmonitor"+monitorslist[i]+"Id").val();
+        if (port.length > 0 && !/([0-9]{0,5})$/.test(port)) {
+            return false;
+        }
+    }
+    if (0 === $("#cephpoolId").val().length) {
+        return false;
+    }
+    if ($("#cephauthId").prop('checked')) {
+        if (0 === $("#cephusernameId").val().length) {
+            return false;
+        }
+        if ($("#cephkeyId").val().length < 10) {
+            return false;
+        }
+    }
+    return true;
 };
 
 kimchi.addPool = function(event) {

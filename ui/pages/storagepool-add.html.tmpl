@@ -162,11 +162,11 @@
                             <div id="cephmonitor01div">
                                 <div class="col-md-12">
                                     <div class="col-md-9">
-                                        <input id="cephmonitor01Id" type="text" class="form-control" placeholder="$_("Monitor IP or hostname")">
+                                        <input id="cephmonitor01Id" name="cephmonitor01hostname" type="text" class="form-control" placeholder="$_("Monitor IP or hostname")">
                                     </div>
                                     <div class="col-md-2">
                                         <label for="cephport01Id" class="sr-only">$_("Port")</label>
-                                        <input id="cephport01Id" placeholder="$_("Port")" type="text" class="form-control" maxlength="5">
+                                        <input id="cephport01Id" name="cephport01port" placeholder="$_("Port")" type="text" class="form-control" maxlength="5">
                                     </div>
                                     <div class="col-md-1">
                                         <button class="btn btn-primary ceph-monitor-delete disabled" data-monitor-number="01" type="button">
@@ -204,10 +204,10 @@
                     <div class="cephauthenticationfield form-section">
                         <div class="form-group">
                             <div class="col-md-4">
-                                <input id="cephusernameId" placeholder="$_("Ceph User Name")" type="text" class="form-control">
+                                <input id="cephusernameId" name="cephusername" placeholder="$_("Ceph User Name")" type="text" class="form-control">
                             </div>
                             <div class="col-md-8">
-                                <input id="cephkeyId" placeholder="$_("Ceph base64 key")" type="text" class="form-control">
+                                <input id="cephkeyId" name="cephkey" placeholder="$_("Ceph base64 key")" type="text" class="form-control">
                             </div>
                         </div>
                 </div>

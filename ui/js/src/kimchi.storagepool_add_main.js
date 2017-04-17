@@ -126,12 +126,12 @@ kimchi.setupISCSI = function(){
 kimchi.generateCephStorageMonitorForm = function(rowid) {
     var monitorrow = $("<div/>", {'id': 'cephmonitor' + rowid + 'div'});
     var hostnamediv = $("<div/>", {'class': 'col-md-9'});
-    hostnamediv.append($("<input/>", {'id': 'cephmonitor' + rowid + 'Id', 'type': 'text', 'class': 'form-control', 'placeholder': "Monitor IP or hostname"}));
+    hostnamediv.append($("<input/>", {'id': 'cephmonitor' + rowid + 'Id', 'name':  'cephmonitor' + rowid + 'hostname', 'type': 'text', 'class': 'form-control', 'placeholder': "Monitor IP or hostname"}));
     var portdiv = $("<div/>", {'class': 'col-md-2'});
     var portlabel = $('<label/>', {'for': 'cephport' + rowid + 'Id', 'class': 'sr-only'});
     portlabel.append("Port");
     portdiv.append(portlabel);
-    portdiv.append($("<input/>", {'id': 'cephport' + rowid + 'Id', 'placeholder': "Port", 'type': 'text', 'class': 'form-control', 'maxlength': '5'}));
+    portdiv.append($("<input/>", {'id': 'cephport' + rowid + 'Id', 'name': 'cephport' + rowid + 'port', 'placeholder': "Port", 'type': 'text', 'class': 'form-control', 'maxlength': '5'}));
     var removediv = $('<div/>', {'class': 'col-md-1'});
     var removebutton = $('<button/>', {'class': 'btn btn-primar ceph-monitor-delete', 'data-monitor-number': rowid, 'type': 'button'});
     removebutton.append($('<i/>', {'class': 'fa fa-ban'}));

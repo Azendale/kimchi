@@ -22,6 +22,7 @@ import lxml.etree as ET
 import os
 import tempfile
 from lxml.builder import E
+import base64
 
 from wok.exception import InvalidParameter, OperationFailed, TimeoutExpired
 from wok.rollbackcontext import RollbackContext
@@ -83,7 +84,7 @@ class CephPoolDef(StoragePoolDef):
             secret.append(usage)
             virSecret = conn.secretDefineXML(ET.tostring(secret))
 
-        virSecret.setValue(auth['key'])
+        virSecret.setValue(base64.b64decode(auth['key']))
     
     @property
     def xml(self):

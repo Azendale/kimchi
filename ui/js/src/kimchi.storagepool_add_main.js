@@ -131,7 +131,7 @@ kimchi.generateCephStorageMonitorForm = function(rowid) {
     var portlabel = $('<label/>', {'for': 'cephport' + rowid + 'Id', 'class': 'sr-only'});
     portlabel.append("Port");
     portdiv.append(portlabel);
-    portdiv.append($("<input/>", {'id': 'cephport' + rowid + 'Id', 'name': 'cephport' + rowid + 'port', 'placeholder': "Port", 'type': 'text', 'class': 'form-control', 'maxlength': '5'}));
+    portdiv.append($("<input/>", {'id': 'cephport' + rowid + 'Id', 'name': 'cephport' + rowid, 'placeholder': "Port", 'type': 'text', 'class': 'form-control', 'maxlength': '5'}));
     var removediv = $('<div/>', {'class': 'col-md-1'});
     var removebutton = $('<button/>', {'class': 'btn btn-primar ceph-monitor-delete', 'data-monitor-number': rowid, 'type': 'button'});
     removebutton.append($('<i/>', {'class': 'fa fa-ban'}));

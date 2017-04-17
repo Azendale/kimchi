@@ -366,7 +366,7 @@ class StoragePoolModel(object):
         xml = pool.XMLDesc(0)
         pool_type = xpath_get_text(xml, "/pool/@type")[0]
         if 'rbd' == pool_type:
-            path = ''
+            path = 'rbd://' + xpath_get_text(xml, "/pool/source/name")[0]
         else:
             path = xpath_get_text(xml, "/pool/target/path")[0]
         source = self._get_storage_source(pool_type, xml)

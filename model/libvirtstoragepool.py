@@ -59,6 +59,32 @@ class StoragePoolDef(object):
 class CephPoolDef(StoragePoolDef):
     poolType = 'ceph'
     
+    def prepare(self, conn):
+        self._prepare_auth(conn)
+
+    def _prepare_auth(self, conn):
+        try:
+            auth = self.poolArgs['source']['auth']
+        except KeyError:
+            return
+
+        try:
+            virSecret = conn.secretLookupByUsage(
+                libvirt.VIR_SECRET_USAGE_TYPE_CEPH, self.poolArgs['name'])
+        except libvirt.libvirtError:
+            secret = E.secret(ephemeral='no', private='yes')
+
+            description = E.description('Secret for Ceph RBD storage pool %s' %
+                                        self.poolArgs['name'])
+            secret.append(description)
+
+            usage = E.usage(type='ceph')
+            usage.append(E.name(self.poolArgs['name']))
+            secret.append(usage)
+            virSecret = conn.secretDefineXML(ET.tostring(secret))
+
+        virSecret.setValue(auth['key'])
+    
     @property
     def xml(self):
         # Required parameters
@@ -69,16 +95,17 @@ class CephPoolDef(StoragePoolDef):
         pool = E.pool(type='rbd')
         pool.append(E.name(self.poolArgs['name']))
         source = E.source()
-        source.append(E.name(self.poolArgs['source']['cephPool']))
+        source.append(E.name(self.poolArgs['source']['cephpool']))
         for host in self.poolArgs['source']['hosts']:
             if 'port' in host.keys():
                 source.append(E.host(name=host['name'], port=host['port']))
         if 'auth' in self.poolArgs['source']:
             auth = E.auth(username=self.poolArgs['source']['auth']['username'], type='ceph')
-            auth.append(E.secret(uuid=self.poolArgs['source']['auth']['secretUUID']))
+            auth.append(E.secret(usage=self.poolArgs['name']))
             source.append(auth)
         pool.append(source)
         return ET.tostring(pool, encoding='unicode', pretty_print=True)
+
 
 class DirPoolDef(StoragePoolDef):
     poolType = 'dir'

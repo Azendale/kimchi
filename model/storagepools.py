@@ -53,7 +53,8 @@ STORAGE_SOURCES = {'netfs': {'addr': '/pool/source/host/@name',
                    'scsi': {'adapter_type': '/pool/source/adapter/@type',
                             'adapter_name': '/pool/source/adapter/@name',
                             'wwnn': '/pool/source/adapter/@wwnn',
-                            'wwpn': '/pool/source/adapter/@wwpn'}}
+                            'wwpn': '/pool/source/adapter/@wwpn'},
+                   'ceph': {'path': '/pool/source/@name'} }
 
 
 class StoragePoolsModel(object):
@@ -187,7 +188,18 @@ class StoragePoolsModel(object):
                 # Adds name, adapter_type, wwpn and wwnn to source information
                 params['source'].update(extra_params)
                 params['fc_host_support'] = self.caps.fc_host_support
-
+                
+            if params['type'] == 'ceph':
+                params['source'] = {'hosts': [] }
+                for number in params['ceph-monitor-numbers-list-name'].split(','):
+                    if 'cephport'+number in params and len(params['cephport'+number]) > 0:
+                        params['source']['hosts'].append({'name': params['cephmonitor'+number+'hostname'], 'port': params['cephport'+number]})
+                    else:
+                        params['source']['hosts'].append({'name': params['cephmonitor'+number+'hostname']})
+                if 'cephauthname' in params and u'on' == params['cephauthname']:
+                    params['source']['auth'] = {'username': params['cephusername'], 'key': params['cephkey']}
+                params['source']['cephpool'] = params['cephpool']
+            
             poolDef = StoragePoolDef.create(params)
             poolDef.prepare(conn)
             xml = poolDef.xml.encode("utf-8")
@@ -312,6 +324,20 @@ class StoragePoolModel(object):
                 source[key] = ""
             else:
                 source[key] = res
+        # Tricky part with Ceph is multiple monitors. So display them in
+        # {firstmonitor,secondmonitor:port} format like CephFS fstab entries
+        # Collect monitor hostname/IP and port manually instead of xpath
+        if 'ceph' == pool_type:
+            hosts = []
+            res = xpath_get_text(pool_xml, '/pool/source/@host')
+            print(res)
+            for result in res:
+                hoststring = xpath_get_text(result, '/@name')[0]
+                port = xpath_get_text(result, '/@port')
+                if len(port) > 0:
+                    hoststring += ':' + port[0]
+                hosts.append(hoststring)
+            source['host'] = '{' + ','.join(hosts) + '}'
         return source
 
     def _nfs_status_online(self, pool, poolArgs=None):

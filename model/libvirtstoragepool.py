@@ -56,6 +56,29 @@ class StoragePoolDef(object):
         # tests/test_storagepool.py
         raise OperationFailed("KCHPOOL0015E", {'pool': self})
 
+class CephPoolDef(StoragePoolDef):
+    poolType = 'ceph'
+    
+    @property
+    def xml(self):
+        # Required parameters
+        # name:
+        # source[host] (one or more)
+        # Optional (usually needed)
+        # source[auth][secret]
+        pool = E.pool(type='rbd')
+        pool.append(E.name(self.poolArgs['name']))
+        source = E.source()
+        source.append(E.name(self.poolArgs['source']['cephPool']))
+        for host in self.poolArgs['source']['hosts']:
+            if 'port' in host.keys():
+                source.append(E.host(name=host['name'], port=host['port']))
+        if 'auth' in self.poolArgs['source']:
+            auth = E.auth(username=self.poolArgs['source']['auth']['username'], type='ceph')
+            auth.append(E.secret(uuid=self.poolArgs['source']['auth']['secretUUID']))
+            source.append(auth)
+        pool.append(source)
+        return ET.tostring(pool, encoding='unicode', pretty_print=True)
 
 class DirPoolDef(StoragePoolDef):
     poolType = 'dir'

@@ -134,7 +134,7 @@
                 "type": {
                     "description": "The type of the defined Storage Pool",
                     "type": "string",
-                    "pattern": "^dir|netfs|logical|kimchi-iso|iscsi|scsi$",
+                    "pattern": "^dir|netfs|logical|kimchi-iso|iscsi|scsi|ceph$",
                     "required": true,
                     "error": "KCHPOOL0017E"
                 },

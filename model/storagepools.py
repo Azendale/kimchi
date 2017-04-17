@@ -364,8 +364,11 @@ class StoragePoolModel(object):
         autostart = True if pool.autostart() else False
         persistent = True if pool.isPersistent() else False
         xml = pool.XMLDesc(0)
-        path = xpath_get_text(xml, "/pool/target/path")[0]
         pool_type = xpath_get_text(xml, "/pool/@type")[0]
+        if 'rbd' == pool_type:
+            path = ''
+        else:
+            path = xpath_get_text(xml, "/pool/target/path")[0]
         source = self._get_storage_source(pool_type, xml)
         # FIXME: nfs workaround - prevent any libvirt operation
         # for a nfs if the corresponding NFS server is down.

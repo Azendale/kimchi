@@ -99,6 +99,8 @@ class CephPoolDef(StoragePoolDef):
         for host in self.poolArgs['source']['hosts']:
             if 'port' in host.keys():
                 source.append(E.host(name=host['name'], port=host['port']))
+            else:
+                source.append(E.host(name=host['name']))
         if 'auth' in self.poolArgs['source']:
             auth = E.auth(username=self.poolArgs['source']['auth']['username'], type='ceph')
             auth.append(E.secret(usage=self.poolArgs['name']))

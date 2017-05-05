@@ -41,6 +41,12 @@
                     </select>
                     <p class="help-block"><i class="fa fa-info-circle"></i> $_("The device type. Currently, \"cdrom\" and \"disk\" are supported. If the guest is running, only \"disk\" is supported.")</p>
                 </div>
+                <div class="">
+                            <input type="radio" checked="checked" name="source-type-btn" id="pool-disk" value="pool-disk" class="wok-radio">
+                            <label for="pool-disk">$_("LibVirt pool disk")</label>
+                            <input type="radio" name="source-type-btn" id="individual-disk" value="individual-disk" class="wok-radio">
+                            <label for="individual-disk">$_("Individual disk")</label>                    
+                </div>
                 <div class="volume-section hidden form-group">
                     <div class="template-modal-container">
                         <div>
